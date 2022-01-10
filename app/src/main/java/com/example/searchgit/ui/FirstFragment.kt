@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.searchgit.R
+import com.example.searchgit.network.RetrofitClient
 
 
 class FirstFragment : Fragment() {
@@ -15,6 +16,10 @@ class FirstFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val instance = RetrofitClient.getInstance()
+
+        val call= instance.get
+
     }
 
     override fun onCreateView(

@@ -6,7 +6,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface RetrofitService {
-    @GET
+    @GET("search/users")
     fun getGitUsers(
         @Query("q") q:String
     ):Call<GitUsers>

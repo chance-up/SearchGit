@@ -2,10 +2,17 @@ package com.example.searchgit
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.telecom.Call
+import android.util.Log
 import android.view.View
 import android.widget.RelativeLayout
 import com.example.searchgit.adapter.BottomNavAdapter
+import com.example.searchgit.model.GitUsers
+import com.example.searchgit.network.RetrofitClient
+import com.example.searchgit.network.RetrofitService
 import kotlinx.android.synthetic.main.activity_main.*
+import retrofit2.Response
+import javax.security.auth.callback.Callback
 
 
 class MainActivity : AppCompatActivity() {
@@ -13,6 +20,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         configureBottomNav()
+
 
     }
 

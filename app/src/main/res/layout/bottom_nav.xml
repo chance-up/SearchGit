@@ -6,7 +6,7 @@
     android:orientation="horizontal">
 
     <RelativeLayout
-        android:id="@+id/btn_bottom_navi_first"
+        android:id="@+id/btn_bottom_navi_search"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1">
@@ -18,7 +18,7 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/btn_bottom_navi_second"
+        android:id="@+id/btn_bottom_navi_database"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1">

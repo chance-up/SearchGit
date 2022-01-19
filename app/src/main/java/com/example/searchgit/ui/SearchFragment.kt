@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import com.example.searchgit.adapter.GitUserItemAdapter
 import com.example.searchgit.databinding.FragmentSearchBinding
 import com.example.searchgit.ui.viewmodel.SearchViewModel
 

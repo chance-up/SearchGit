@@ -6,8 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.searchgit.databinding.ItemGituserBinding
 import com.example.searchgit.model.GitUser
 
-class GitUserItemAdapter():RecyclerView.Adapter<GitUserItemAdapter.MyViewHolder>(){
+class SearchRecyclerViewAdapter():RecyclerView.Adapter<SearchRecyclerViewAdapter.MyViewHolder>(){
+
     var gitUsers = mutableListOf<GitUser>()
+
     class MyViewHolder(private val binding: ItemGituserBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(item:GitUser){
             binding.apply {
@@ -16,13 +18,13 @@ class GitUserItemAdapter():RecyclerView.Adapter<GitUserItemAdapter.MyViewHolder>
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GitUserItemAdapter.MyViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchRecyclerViewAdapter.MyViewHolder {
         return MyViewHolder(
             ItemGituserBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         )
     }
 
-    override fun onBindViewHolder(holder: GitUserItemAdapter.MyViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: SearchRecyclerViewAdapter.MyViewHolder, position: Int) {
         holder.apply { bind(gitUsers[position]) }
     }
 

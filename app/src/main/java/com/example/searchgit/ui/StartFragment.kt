@@ -39,15 +39,4 @@ class StartFragment : Fragment() {
                 i: Int -> tab.customView = relativeLayoutList[i]
         }.attach()
     }
-////text = "OBJECT ${(i + 1)}"
-//    private fun customizingTabLayout(){
-//        val tabLayout = startFragmentBinding.tabLayoutBottomNav
-//        val bottomNavLayout: View = this.layoutInflater.inflate(R.layout.bottom_nav,null,false)
-//        tabLayout.getTabAt(0)?.customView = bottomNavLayout.findViewById(R.id.btn_bottom_navi_search) as RelativeLayout
-//        tabLayout.getTabAt(1)?.customView = bottomNavLayout.findViewById(R.id.btn_bottom_navi_database) as RelativeLayout
-//        tabLayout.getTabAt(2)?.customView = bottomNavLayout.findViewById(R.id.btn_bottom_navi_third) as RelativeLayout
-//
-//
-//    }
-
 }

@@ -1,7 +1,6 @@
 package com.example.searchgit.api
 
-import com.example.searchgit.model.GitUsers
-import retrofit2.Call
+import com.example.searchgit.data.GitUsers
 import retrofit2.http.GET
 import retrofit2.http.Query
 

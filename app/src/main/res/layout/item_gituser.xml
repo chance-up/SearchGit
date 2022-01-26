@@ -6,9 +6,8 @@
     <data>
         <variable
             name="gitUser"
-            type="com.example.searchgit.model.GitUser" />
+            type="com.example.searchgit.data.GitUser" />
     </data>
-
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
@@ -26,7 +25,7 @@
                 android:layout_width="36dp"
                 android:layout_height="36dp"
                 android:id="@+id/avatarView"
-                app:imageUrl="@{gitUser.image}"
+                imageUrl="@{gitUser.image}"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"/>
             <TextView

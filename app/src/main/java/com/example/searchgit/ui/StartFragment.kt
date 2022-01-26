@@ -10,6 +10,7 @@ import androidx.core.view.get
 import androidx.viewpager2.widget.ViewPager2
 import com.example.searchgit.R
 import com.example.searchgit.adapter.ViewPagerAdapter
+import com.example.searchgit.databinding.BottomNavBinding
 import com.example.searchgit.databinding.FragmentStartBinding
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -17,8 +18,11 @@ import com.google.android.material.tabs.TabLayoutMediator
 class StartFragment : Fragment() {
 
     private lateinit var startFragmentBinding : FragmentStartBinding
+    private lateinit var bottomNothing : BottomNavBinding
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        bottomNothing = BottomNavBinding.inflate(inflater,container,false)
         startFragmentBinding = FragmentStartBinding.inflate(inflater,container,false)
         return startFragmentBinding.root
     }
@@ -27,11 +31,10 @@ class StartFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val viewPager = startFragmentBinding.viewPagerBottomNav
         val tabLayout = startFragmentBinding.tabLayoutBottomNav
-        val bottomNavLayout: View = this.layoutInflater.inflate(R.layout.bottom_nav,null,false)
-        val relativeLayoutList = listOf<RelativeLayout>(
-            bottomNavLayout.findViewById(R.id.btn_bottom_navi_search),
-            bottomNavLayout.findViewById(R.id.btn_bottom_navi_database),
-            bottomNavLayout.findViewById(R.id.btn_bottom_navi_third)
+        val relativeLayoutList = listOf(
+            bottomNothing.btnBottomNaviSearch,
+            bottomNothing.btnBottomNaviDatabase ,
+            bottomNothing.btnBottomNaviThird
         )
         viewPager.adapter = ViewPagerAdapter(this)
         TabLayoutMediator(tabLayout,viewPager){

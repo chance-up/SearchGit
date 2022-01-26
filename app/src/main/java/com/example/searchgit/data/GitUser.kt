@@ -1,4 +1,4 @@
-package com.example.searchgit.model
+package com.example.searchgit.data
 
 import com.google.gson.annotations.SerializedName
 
@@ -6,7 +6,7 @@ data class GitUsers(
     @SerializedName("total_count")
     val totalCount:String,
     @SerializedName("items")
-    val items:List<GitUser>
+    val items:ArrayList<GitUser>
 )
 
 data class GitUser(
@@ -14,6 +14,6 @@ data class GitUser(
     val image:String,
     @SerializedName("login")
     val id:String,
-    @SerializedName("url")
+    @SerializedName("html_url")
     val url:String
 )

@@ -4,22 +4,21 @@ import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.searchgit.model.GitUser
+import com.example.searchgit.data.GitUser
 
 object BindingAdapter {
+
     @BindingAdapter("items")
     @JvmStatic
-    fun RecyclerView.setItem(items:MutableList<GitUser>?){
-        if(adapter ==null && items != null){
-            val adapter = SearchRecyclerViewAdapter().apply {
-                gitUsers = items
-            }
-            setAdapter(adapter)
-            adapter.notifyDataSetChanged()
-        }
-//        val gitUserAdapter = recyclerView.adapter as SearchRecyclerViewAdapter
-//        gitUserAdapter.gitUsers = items!!
+    fun RecyclerView.setItems(gitUserList:ArrayList<GitUser>?){
+        (this.adapter as? SearchRecyclerViewAdapter)?.submitList(gitUserList?.toMutableList())
     }
+
+//    @BindingAdapter("items")
+//    @JvmStatic
+//    fun <T>RecyclerView.setItems(gitUserList : ArrayList<GitUser>?){
+//        (adapter as? ListAdapter<T,*>)?.submitList(gitUserList as MutableList<T>?)
+//    }
 
     @BindingAdapter("imageUrl")
     @JvmStatic

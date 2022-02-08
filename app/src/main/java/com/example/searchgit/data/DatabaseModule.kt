@@ -1,5 +1,8 @@
 package com.example.searchgit.data
 
-
-abstract class DatabaseModule {
-}
+import androidx.room.Database
+//
+//
+//@Database
+//abstract class DatabaseModule {
+//}

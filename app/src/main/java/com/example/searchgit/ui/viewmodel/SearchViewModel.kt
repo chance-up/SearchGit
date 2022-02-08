@@ -1,15 +1,15 @@
 package com.example.searchgit.ui.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.searchgit.data.GitUser
 import com.example.searchgit.network.NetworkModule.service
+import com.example.searchgit.repository.GitUserRepository
 import kotlinx.coroutines.launch
+import java.lang.IllegalArgumentException
 
-class SearchViewModel : ViewModel() {
+class SearchViewModel(private val gitUserRepo:GitUserRepository) : ViewModel() {
     val searchText = MutableLiveData<String>()
+
 
     // abstract
     // implements -> interface
@@ -19,6 +19,7 @@ class SearchViewModel : ViewModel() {
     // 외부에선 set은 할 수 없고 오로지 get(Observe)만 하도록 하기 위함이다.
     private val _gitUsers = MutableLiveData<ArrayList<GitUser>>()
     val gitUsers : LiveData<ArrayList<GitUser>> = _gitUsers
+
 
     private var items: ArrayList<GitUser> = arrayListOf()
 
@@ -31,19 +32,22 @@ class SearchViewModel : ViewModel() {
         // 해도 된다.
     }
 
-    fun buttonClick(){
-        //this@SearchViewModel.items.clear()
+    fun _getGitUsers(){
         viewModelScope.launch {
-
-            val result = service.getGitUsers(searchText.value)
+            val result = gitUserRepo.getGitUsers(searchText.value)
             _gitUsers.value = (result.items)
-//            for(i in result.items) {
-//                this@SearchViewModel.items.add(i)
-//            }
-//            _gitUsers.value = this@SearchViewModel.items
+            //_gitUsers.value = (result.items)
         }
     }
 }
 
+class SearchViewModelFactory(private val gitUserRepo: GitUserRepository): ViewModelProvider.Factory{
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        if(modelClass.isAssignableFrom(SearchViewModel::class.java)){
+            return SearchViewModel(gitUserRepo) as T
+        }
+        throw IllegalArgumentException("Not Found ViewModel Class!")
+    }
+}
 
 

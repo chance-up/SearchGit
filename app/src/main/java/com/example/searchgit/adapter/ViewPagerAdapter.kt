@@ -1,5 +1,6 @@
 package com.example.searchgit.adapter
 
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.searchgit.ui.DatabaseFragment
@@ -16,6 +17,7 @@ class ViewPagerAdapter(fragment:Fragment):FragmentStateAdapter(fragment) {
     override fun getItemCount(): Int = fragmentList.size
 
     override fun createFragment(position: Int): Fragment {
+
         return fragmentList[position]
     }
 }

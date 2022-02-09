@@ -3,18 +3,22 @@ package com.example.searchgit.ui.viewmodel
 import android.util.Log
 import androidx.lifecycle.*
 import com.example.searchgit.data.GitUser
+import com.example.searchgit.data.ResultStatus
 import com.example.searchgit.repository.GitUserAPIRepository
 import com.example.searchgit.repository.GitUserDBRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
+import java.lang.Exception
 import java.lang.IllegalArgumentException
 
 class SearchViewModel(
-    private val gitUserAPIRepo:GitUserAPIRepository,
-    private val gitUserDBRepo:GitUserDBRepository
-): ViewModel() {
+    private val gitUserAPIRepo: GitUserAPIRepository,
+    private val gitUserDBRepo: GitUserDBRepository
+) : ViewModel() {
     val searchText = MutableLiveData<String>()
-
 
     // abstract
     // implements -> interface
@@ -23,7 +27,7 @@ class SearchViewModel(
     // 그리고 외부에다가는 name 변수를 보여줄것이다. observe되는 것도 이 변수이다.
     // 외부에선 set은 할 수 없고 오로지 get(Observe)만 하도록 하기 위함이다.
     private val _gitUsers = MutableLiveData<ArrayList<GitUser>>()
-    val gitUsers : LiveData<ArrayList<GitUser>> = _gitUsers
+    val gitUsers: LiveData<ArrayList<GitUser>> = _gitUsers
 
     init {
 
@@ -35,45 +39,31 @@ class SearchViewModel(
         // 해도 된다.
     }
 
-    fun showGitUsers(){
+    fun showGitUsers() {
         viewModelScope.launch {
             val result = gitUserAPIRepo.getGitUsers(searchText.value)
             _gitUsers.value = result.items
         }
     }
 
-    fun changeLikeStatus(position:Int){
-        //Log.e("ccs","in ViewModel :: ${_gitUsers.value?.get(position)}")
-        //Log.e("ccs","in ViewModel :: ${_gitUsers.value?.get(position)?.id}")
-        //Log.e("ccs","in ViewModel :: ${_gitUsers.value?.get(position)}")
-        //gitUserDBRepo.selectOne(_gitUsers.value?.get(position)?.id!!)
-
-
-
-        viewModelScope.launch(Dispatchers.IO) {
-
-            //Log.e("ccs","in ViewModel :: $result")
-
-
-//
-//            Log.e("ccs","in ViewModel :: $gitUserDB")
-            val gitUserDB =_gitUsers.value?.get(position)
-            val result = gitUserDBRepo.insert(gitUserDB)
-            Log.e("ccs result","$result")
-//            _gitUsers.value = (result.items)
-//            val result1 = gitUserDBRepo.selectOne(_gitUsers.value?.get(position)?.id!!)
-//            Log.e("ccs result1","$result1")
+    fun changeLikeStatus(position: Int) = liveData {
+        emit(ResultStatus.Loading)
+        try {
+            val gitUserDB = _gitUsers.value?.get(position)
+            emit(ResultStatus.Success(gitUserDBRepo.insert(gitUserDB)))
+        } catch (e: Exception) {
+            emit(ResultStatus.Error(e))
         }
     }
 }
 
 class SearchViewModelFactory(
     private val gitUserAPIRepo: GitUserAPIRepository,
-    private val gitUserDBRepo:GitUserDBRepository
-    ): ViewModelProvider.Factory{
+    private val gitUserDBRepo: GitUserDBRepository
+) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if(modelClass.isAssignableFrom(SearchViewModel::class.java)){
-            return SearchViewModel(gitUserAPIRepo,gitUserDBRepo) as T
+        if (modelClass.isAssignableFrom(SearchViewModel::class.java)) {
+            return SearchViewModel(gitUserAPIRepo, gitUserDBRepo) as T
         }
         throw IllegalArgumentException("Not Found ViewModel Class!")
     }

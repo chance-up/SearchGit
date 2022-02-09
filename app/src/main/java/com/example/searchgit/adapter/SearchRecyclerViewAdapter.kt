@@ -13,7 +13,7 @@ import com.example.searchgit.data.GitUser
 class SearchRecyclerViewAdapter :
     ListAdapter<GitUser, SearchRecyclerViewAdapter.MyViewHolder>(diffUtil) {
 
-    var onClickLikeBtn: ((Int) -> Boolean)? = null
+    var onClickLikeBtn: ((Int) -> Unit)? = null
 
 
     inner class MyViewHolder(private val binding: ItemGituserBinding) :

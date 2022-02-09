@@ -15,9 +15,13 @@ class DatabaseViewModel(private val gitUserDBRepo: GitUserDBRepository):ViewMode
         viewModelScope.launch(Dispatchers.IO) {
             _gitUsers.postValue(ArrayList(gitUserDBRepo.selectAll()))
         }
-
     }
 
+    fun update() {
+        viewModelScope.launch(Dispatchers.IO) {
+            _gitUsers.postValue(ArrayList(gitUserDBRepo.selectAll()))
+        }
+    }
 }
 
 

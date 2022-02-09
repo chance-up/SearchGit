@@ -9,11 +9,12 @@
         <entry key="app/src/main/res/layout/bottom_menu_tab.xml" value="0.2980072463768116" />
         <entry key="app/src/main/res/layout/bottom_nav.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/bottom_nav_menu.xml" value="0.2980072463768116" />
-        <entry key="app/src/main/res/layout/fragment_database.xml" value="0.21354166666666666" />
+        <entry key="app/src/main/res/layout/fragment_database.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_first.xml" value="0.1875" />
         <entry key="app/src/main/res/layout/fragment_search.xml" value="0.21354166666666666" />
         <entry key="app/src/main/res/layout/fragment_second.xml" value="0.2980072463768116" />
         <entry key="app/src/main/res/layout/fragment_start.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/fragment_third.xml" value="0.1734375" />
         <entry key="app/src/main/res/layout/item_gituser.xml" value="0.33" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.36041666666666666" />
       </map>

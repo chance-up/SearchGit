@@ -18,11 +18,11 @@ import com.google.android.material.tabs.TabLayoutMediator
 class StartFragment : Fragment() {
 
     private lateinit var startFragmentBinding : FragmentStartBinding
-    private lateinit var bottomNothing : BottomNavBinding
+    private lateinit var bottomNavBinding: BottomNavBinding
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        bottomNothing = BottomNavBinding.inflate(inflater,container,false)
+        bottomNavBinding = BottomNavBinding.inflate(inflater,container,false)
         startFragmentBinding = FragmentStartBinding.inflate(inflater,container,false)
         return startFragmentBinding.root
     }
@@ -32,9 +32,9 @@ class StartFragment : Fragment() {
         val viewPager = startFragmentBinding.viewPagerBottomNav
         val tabLayout = startFragmentBinding.tabLayoutBottomNav
         val relativeLayoutList = listOf(
-            bottomNothing.btnBottomNaviSearch,
-            bottomNothing.btnBottomNaviDatabase ,
-            bottomNothing.btnBottomNaviThird
+            bottomNavBinding.btnBottomNaviSearch,
+            bottomNavBinding.btnBottomNaviDatabase ,
+            bottomNavBinding.btnBottomNaviThird
         )
         viewPager.adapter = ViewPagerAdapter(this)
         TabLayoutMediator(tabLayout,viewPager){

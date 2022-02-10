@@ -37,7 +37,6 @@ object BindingAdapter {
         if (!isLike) {
             this.setBackgroundColor(Color.rgb(99, 0, 255))
             this.text = "Like"
-
         } else {
             this.setBackgroundColor(Color.DKGRAY)
             this.text = "DisLike"

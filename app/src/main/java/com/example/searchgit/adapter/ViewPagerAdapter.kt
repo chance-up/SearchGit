@@ -13,11 +13,6 @@ class ViewPagerAdapter(fragment:Fragment):FragmentStateAdapter(fragment) {
         DatabaseFragment(),
         ThirdFragment()
     )
-
     override fun getItemCount(): Int = fragmentList.size
-
-    override fun createFragment(position: Int): Fragment {
-
-        return fragmentList[position]
-    }
+    override fun createFragment(position: Int): Fragment = fragmentList[position]
 }

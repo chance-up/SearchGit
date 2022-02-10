@@ -4,6 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="com.example.searchgit.AdapterType"/>
+
+        <variable
+            name="adapterType"
+            type="com.example.searchgit.AdapterType" />
+
         <variable
             name="gitUser"
             type="com.example.searchgit.data.GitUser" />
@@ -27,7 +33,8 @@
                 android:id="@+id/buttonLike"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="LIKE"
+                adapterType="@{adapterType}"
+                isLike="@{gitUser.isLike}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

@@ -25,7 +25,7 @@ data class GitUser(
     @ColumnInfo(name="url")
     val url:String,
     @ColumnInfo(name="isLike")
-    val isLike:Boolean = false
+    var isLike:Boolean = false
 )
 
 

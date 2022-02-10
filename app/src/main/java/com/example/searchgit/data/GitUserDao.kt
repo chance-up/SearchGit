@@ -19,4 +19,7 @@ interface GitUserDao {
 
     @Delete
     suspend fun delete(gitUser: GitUser)
+
+    @Query("DELETE FROM git_user_table WHERE id=:gitUserId")
+    suspend fun deleteUserDB(gitUserId: String?):Int
 }

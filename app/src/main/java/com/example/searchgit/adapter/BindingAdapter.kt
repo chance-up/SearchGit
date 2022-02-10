@@ -1,9 +1,15 @@
 package com.example.searchgit.adapter
 
+import android.graphics.Color
+import android.graphics.ColorSpace
+import android.util.Log
+import android.widget.Button
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.searchgit.AdapterType
+import com.example.searchgit.R
 import com.example.searchgit.data.GitUser
 
 object BindingAdapter {
@@ -28,4 +34,30 @@ object BindingAdapter {
             .error(com.example.searchgit.R.drawable.ic_baseline_directions_run_24)
             .into(this)
     }
+
+    @BindingAdapter(value = ["adapterType", "isLike"])
+    @JvmStatic
+    fun Button.activateButton(adapterType: AdapterType, isLike:Boolean){
+        if (adapterType == AdapterType.LOCAL) {
+            if(!isLike){
+                this.setBackgroundColor(Color.rgb(99,0,255))
+                this.text = "Like"
+
+            } else{
+                this.setBackgroundColor(Color.DKGRAY)
+                this.text = "DisLike"
+            }
+        } else {
+            if(!isLike){
+                this.setBackgroundColor(Color.RED)
+                this.text = "Like"
+
+            } else{
+                this.setBackgroundColor(Color.GREEN)
+                this.text = "DisLike"
+            }
+        }
+
+    }
+
 }

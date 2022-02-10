@@ -1,25 +1,20 @@
 package com.example.searchgit.ui
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.example.searchgit.AdapterType
-import com.example.searchgit.R
 import com.example.searchgit.adapter.SearchRecyclerViewAdapter
 import com.example.searchgit.data.AppDatabase
 import com.example.searchgit.data.GitUserDao
 import com.example.searchgit.data.ResultStatus
 import com.example.searchgit.databinding.FragmentDatabaseBinding
-import com.example.searchgit.repository.GitUserDBRepository
 import com.example.searchgit.ui.viewmodel.DatabaseViewModel
-import com.example.searchgit.ui.viewmodel.DatabaseViewModelFactory
 import com.example.searchgit.ui.viewmodel.SharedViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -61,7 +56,7 @@ class DatabaseFragment : Fragment() {
             onClickLikeBtn = {
                 //Log.e("ccs","$it")
                 lifecycleScope.launch {
-                    databaseViewModel.changeLikeStatus(it).observe(viewLifecycleOwner) { result ->
+                    databaseViewModel.disLike(it).observe(viewLifecycleOwner) { result ->
                         when (result) {
                             ResultStatus.Loading -> {
                                 Toast.makeText(

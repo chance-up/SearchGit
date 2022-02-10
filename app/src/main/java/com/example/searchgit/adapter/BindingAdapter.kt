@@ -1,15 +1,11 @@
 package com.example.searchgit.adapter
 
 import android.graphics.Color
-import android.graphics.ColorSpace
-import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.searchgit.AdapterType
-import com.example.searchgit.R
 import com.example.searchgit.data.GitUser
 
 object BindingAdapter {

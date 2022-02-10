@@ -29,26 +29,6 @@ class DatabaseViewModel @Inject constructor(private val gitUserDBRepo: GitUserDB
         }
     }
 
-    fun changeLikeStatus(position:Int)= liveData{
-        emit(ResultStatus.Loading)
-        try {
-            val result = gitUserDBRepo.deleteOne(_gitUsers.value?.get(position)?.id)
-            emit(ResultStatus.Success(result))
-        } catch (e:Exception){
-            emit(ResultStatus.Error(e))
-        }
-    }
-}
-
-
-class DatabaseViewModelFactory(
-    private val gitUserDBRepo: GitUserDBRepository
-): ViewModelProvider.Factory{
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if(modelClass.isAssignableFrom(DatabaseViewModel::class.java)){
-            return DatabaseViewModel(gitUserDBRepo) as T
-        }
-        throw IllegalArgumentException("Not Found ViewModel Class!")
-    }
+    fun disLike(position:Int) = gitUserDBRepo.deleteOne(_gitUsers.value?.get(position)?.id!!)
 }
 

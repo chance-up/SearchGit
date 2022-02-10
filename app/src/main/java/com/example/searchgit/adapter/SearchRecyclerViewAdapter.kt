@@ -1,6 +1,5 @@
 package com.example.searchgit.adapter
 
-import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,12 +9,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.searchgit.databinding.ItemGituserBinding
 import com.example.searchgit.data.GitUser
-import dagger.hilt.android.qualifiers.ActivityContext
-import dagger.hilt.android.scopes.FragmentScoped
-import javax.inject.Inject
 
-@FragmentScoped
-class SearchRecyclerViewAdapter @Inject constructor(@ActivityContext context: Context) :
+class SearchRecyclerViewAdapter :
     ListAdapter<GitUser, SearchRecyclerViewAdapter.MyViewHolder>(diffUtil) {
 
     var onClickLikeBtn: ((Int) -> Unit)? = null

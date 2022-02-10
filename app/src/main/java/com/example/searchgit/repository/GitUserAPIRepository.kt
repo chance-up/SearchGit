@@ -1,11 +1,10 @@
 package com.example.searchgit.repository
 
-import com.example.searchgit.api.GitUserApi
 import com.example.searchgit.data.GitUsers
-import javax.inject.Inject
+import com.example.searchgit.network.NetworkModule
 
-class GitUserAPIRepository @Inject constructor(private val api : GitUserApi) {
+class GitUserAPIRepository {
     suspend fun getGitUsers(id:String?) : GitUsers{
-        return api.getGitUsers(id)
+        return NetworkModule.service.getGitUsers(id)
     }
 }

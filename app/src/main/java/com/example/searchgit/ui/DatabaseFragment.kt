@@ -27,21 +27,25 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class DatabaseFragment : Fragment() {
-    private lateinit var databaseFragmentBinding : FragmentDatabaseBinding
+    private lateinit var databaseFragmentBinding: FragmentDatabaseBinding
     lateinit var gitUserDao: GitUserDao
-    private val databaseViewModel:DatabaseViewModel by viewModels()
+    private val databaseViewModel: DatabaseViewModel by viewModels()
 
     private val sharedViewModel: SharedViewModel by activityViewModels()
+
+    @Inject
+    lateinit var searchRecyclerViewAdapter: SearchRecyclerViewAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         gitUserDao = AppDatabase.getInstance(requireContext()).gitUserDao()
-        databaseFragmentBinding = FragmentDatabaseBinding.inflate(inflater,container,false).apply {
-            vm = databaseViewModel
-            lifecycleOwner = this@DatabaseFragment
-        }
+        databaseFragmentBinding =
+            FragmentDatabaseBinding.inflate(inflater, container, false).apply {
+                vm = databaseViewModel
+                lifecycleOwner = this@DatabaseFragment
+            }
 
         sharedViewModel.update.observe(viewLifecycleOwner) {
             if (it) {
@@ -53,17 +57,25 @@ class DatabaseFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        databaseFragmentBinding.githubUserView.adapter = SearchRecyclerViewAdapter(AdapterType.LOCAL).apply {
+        databaseFragmentBinding.githubUserView.adapter = searchRecyclerViewAdapter.apply {
             onClickLikeBtn = {
                 //Log.e("ccs","$it")
                 lifecycleScope.launch {
-                    databaseViewModel.changeLikeStatus(it).observe(viewLifecycleOwner){ result->
-                        when(result){
+                    databaseViewModel.changeLikeStatus(it).observe(viewLifecycleOwner) { result ->
+                        when (result) {
                             ResultStatus.Loading -> {
-                                Toast.makeText(requireContext(), "Database Delete", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(
+                                    requireContext(),
+                                    "Database Delete",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
                             is ResultStatus.Error -> {
-                                Toast.makeText(requireContext(), "실패했어요${result.throwable}", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(
+                                    requireContext(),
+                                    "실패했어요${result.throwable}",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
                             is ResultStatus.Success -> {
                                 if (result.data != 0) {

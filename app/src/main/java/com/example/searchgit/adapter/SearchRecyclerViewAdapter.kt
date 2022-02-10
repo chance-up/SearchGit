@@ -11,7 +11,8 @@ import com.example.searchgit.databinding.ItemGituserBinding
 import dagger.hilt.android.scopes.FragmentScoped
 import javax.inject.Inject
 
-class SearchRecyclerViewAdapter constructor(private val adapterType: AdapterType) :
+@FragmentScoped
+class SearchRecyclerViewAdapter @Inject constructor() :
     ListAdapter<GitUser, SearchRecyclerViewAdapter.MyViewHolder>(diffUtil) {
 
     var onClickLikeBtn: ((Int) -> Unit)? = null
@@ -20,7 +21,6 @@ class SearchRecyclerViewAdapter constructor(private val adapterType: AdapterType
         RecyclerView.ViewHolder(binding.root) {
         fun bind(gitUser: GitUser) {
             binding.gitUser = gitUser
-            binding.adapterType = adapterType
             binding.buttonLike.setOnClickListener {
                 onClickLikeBtn?.invoke(layoutPosition)
             }

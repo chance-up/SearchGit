@@ -30,6 +30,9 @@ class SearchFragment : Fragment() {
 
     private val searchViewModel: SearchViewModel by viewModels()
 
+    @Inject
+    lateinit var searchRecyclerViewAdapter: SearchRecyclerViewAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -46,7 +49,7 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        searchFragmentBinding.githubUserView.adapter = SearchRecyclerViewAdapter(AdapterType.SERVICE).apply {
+        searchFragmentBinding.githubUserView.adapter = searchRecyclerViewAdapter.apply {
             onClickLikeBtn = {
                 // position으로 get함.
                 // 나중에 paging이 적용 될 경우에는?..?

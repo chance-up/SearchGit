@@ -16,7 +16,7 @@ object BindingAdapter {
 
     @BindingAdapter("items")
     @JvmStatic
-    fun RecyclerView.setItems(gitUserList:ArrayList<GitUser>?){
+    fun RecyclerView.setItems(gitUserList: ArrayList<GitUser>?) {
         (this.adapter as? SearchRecyclerViewAdapter)?.submitList(gitUserList?.toMutableList())
     }
 
@@ -28,36 +28,24 @@ object BindingAdapter {
 
     @BindingAdapter("imageUrl")
     @JvmStatic
-    fun ImageView.loadImage(imageUrl : String){
+    fun ImageView.loadImage(imageUrl: String) {
         Glide.with(context)
             .load(imageUrl)
             .error(com.example.searchgit.R.drawable.ic_baseline_directions_run_24)
             .into(this)
     }
 
-    @BindingAdapter(value = ["adapterType", "isLike"])
+    @BindingAdapter("activateButton")
     @JvmStatic
-    fun Button.activateButton(adapterType: AdapterType, isLike:Boolean){
-        if (adapterType == AdapterType.LOCAL) {
-            if(!isLike){
-                this.setBackgroundColor(Color.rgb(99,0,255))
-                this.text = "Like"
+    fun Button.activateButton(isLike: Boolean) {
+        if (!isLike) {
+            this.setBackgroundColor(Color.rgb(99, 0, 255))
+            this.text = "Like"
 
-            } else{
-                this.setBackgroundColor(Color.DKGRAY)
-                this.text = "DisLike"
-            }
         } else {
-            if(!isLike){
-                this.setBackgroundColor(Color.RED)
-                this.text = "Like"
-
-            } else{
-                this.setBackgroundColor(Color.GREEN)
-                this.text = "DisLike"
-            }
+            this.setBackgroundColor(Color.DKGRAY)
+            this.text = "DisLike"
         }
-
     }
 
 }

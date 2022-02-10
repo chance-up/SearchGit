@@ -2,8 +2,9 @@ package com.example.searchgit.repository
 
 import com.example.searchgit.data.GitUser
 import com.example.searchgit.data.GitUserDao
+import javax.inject.Inject
 
-class GitUserDBRepository(private val gitUserDao: GitUserDao) {
+class GitUserDBRepository @Inject constructor(private val gitUserDao: GitUserDao) {
 
     fun selectOne(gitUserDbId: String) = gitUserDao.getGitUserDB(gitUserDbId)
 

@@ -16,7 +16,9 @@ import com.example.searchgit.databinding.BottomNavBinding
 import com.example.searchgit.databinding.FragmentStartBinding
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class StartFragment : Fragment() {
 
     private lateinit var startFragmentBinding : FragmentStartBinding

@@ -6,17 +6,17 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 @Database(entities = [GitUser::class], version = 1, exportSchema = false)
-abstract class DatabaseModule:RoomDatabase() {
+abstract class AppDatabase:RoomDatabase() {
     abstract fun gitUserDao(): GitUserDao
 
     companion object {
         @Volatile
-        private var INSTANCE:DatabaseModule?=null
+        private var INSTANCE:AppDatabase?=null
 
-        fun getInstance(context: Context): DatabaseModule {
-            return INSTANCE ?: synchronized(DatabaseModule::class) {
+        fun getInstance(context: Context): AppDatabase {
+            return INSTANCE ?: synchronized(AppDatabase::class) {
                 INSTANCE ?: Room.databaseBuilder(context.applicationContext,
-                    DatabaseModule::class.java, "gitUserDB").build().also { INSTANCE = it }
+                    AppDatabase::class.java, "gitUserDB").build().also { INSTANCE = it }
             }
         }
     }

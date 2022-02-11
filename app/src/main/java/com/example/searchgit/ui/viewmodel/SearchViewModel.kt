@@ -1,5 +1,6 @@
 package com.example.searchgit.ui.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.example.searchgit.data.GitUser
 import com.example.searchgit.data.ResultStatus
@@ -32,25 +33,32 @@ class SearchViewModel @Inject constructor(
         //val searchText = MutableLiveData<String>("pparkjae")
     }
 
+    //fun showGitUsers(gitUserId:String) = gitUserAPIRepo.getGitUsers(gitUserId)
+
+    fun showGitUser1() = gitUserAPIRepo.getGitUsers(searchText.value)
+
     fun showGitUsers() {
-        viewModelScope.launch(Dispatchers.IO) {
-            val apiGitUsers:MutableSet<String> = mutableSetOf()
+        //viewModelScope.launch(Dispatchers.IO) {
+          ///  val apiGitUsers:MutableSet<String> = mutableSetOf()
 
-            val resultGitUserDb = gitUserDBRepo.selectAll()
-            for(i in resultGitUserDb){
-                apiGitUsers.add(i.id)
-            }
+            //val resultGitUserDb = gitUserDBRepo.selectAll().value
 
-            val resultGitUser = gitUserAPIRepo.getGitUsers(searchText.value).items
-            for(i in resultGitUser){
-                //val setResult = apiGitUsers.add(i.id)
-                if(!apiGitUsers.add(i.id)){
-                    i.isLike = true
-                }
-            }
+            //Log.e("ccs","$resultGitUserDb")
+//            for(i in resultGitUserDb){
+//                apiGitUsers.add(i.id)
+//            }
+//
+            //val resultGitUser =
+            //Log.e("ccs","$resultGitUser")
+//            for(i in resultGitUser){
+//                //val setResult = apiGitUsers.add(i.id)
+//                if(!apiGitUsers.add(i.id)){
+//                    i.isLike = true
+//                }
+//            }
 
-            _gitUsers.postValue(resultGitUser)
-        }
+            //_gitUsers.postValue(resultGitUser)
+        //}
     }
 
     fun changeLikeStatus(position: Int) = liveData {

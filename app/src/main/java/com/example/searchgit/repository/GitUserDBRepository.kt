@@ -8,7 +8,17 @@ import java.lang.Exception
 import javax.inject.Inject
 
 class GitUserDBRepository @Inject constructor(private val gitUserDao: GitUserDao) {
-    fun selectAll() = gitUserDao.getGitUsersDB()
+    fun selectAll() = liveData {
+        emit(ResultStatus.Loading)
+        try{
+            val result = gitUserDao.getGitUsersDB()
+            emit(ResultStatus.Success(result))
+        } catch (e: Exception) {
+            emit(ResultStatus.Error(e))
+        }
+    }
+
+
     suspend fun insert(gitUser: GitUser?) = gitUserDao.insert(gitUser)
 
     fun deleteOne(gitUserId: String) = liveData {

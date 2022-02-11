@@ -1,6 +1,7 @@
 package com.example.searchgit.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,6 +42,11 @@ class SearchFragment : Fragment() {
             vm = searchViewModel
             lifecycleOwner = this@SearchFragment
         }
+        searchFragmentBinding.searchButton.setOnClickListener {
+            showList()
+            //Log.e("ccs","ccccc")
+        }
+
 
         return searchFragmentBinding.root
     }
@@ -84,6 +90,70 @@ class SearchFragment : Fragment() {
                     }
                 }
             }
+        }
+
+//        searchFragmentBinding.searchButton.setOnClickListener {
+//            lifecycleScope.launch{
+//                searchViewModel.showGitUsers()
+////                searchViewModel.showGitUsers().observe(viewLifecycleOwner){ result->
+////                    when (result) {
+////                        ResultStatus.Loading -> {
+////                            Toast.makeText(
+////                                requireContext(),
+////                                "API Search",
+////                                Toast.LENGTH_SHORT
+////                            ).show()
+////                        }
+////
+////                        is ResultStatus.Error -> {
+////                            Toast.makeText(
+////                                requireContext(),
+////                                "실패했어요${result.throwable}",
+////                                Toast.LENGTH_SHORT
+////                            ).show()
+////                        }
+////
+////                        is ResultStatus.Success -> {
+////                            if (result.data != null) {
+////                                searchViewModel.
+////                            }
+////                        }
+////                    }
+////                }
+//            }
+//        }
+
+
+
+
+
+    }
+
+    private fun showList(){
+        searchViewModel.showGitUser1().observe(viewLifecycleOwner){ result ->
+            when(result){
+                is ResultStatus.Loading -> {
+                    Toast.makeText(
+                        requireContext(),
+                        "API Select All",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                is ResultStatus.Error -> {
+                    Toast.makeText(
+                        requireContext(),
+                        "실패했어요${result.throwable}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                is ResultStatus.Success -> {
+                    if(result.data !=null){
+
+                    }
+                }
+            }
+            //Log.e("ccs","$it")
+
         }
     }
 }

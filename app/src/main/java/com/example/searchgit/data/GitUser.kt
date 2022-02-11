@@ -27,16 +27,3 @@ data class GitUser(
     @ColumnInfo(name="isLike")
     var isLike:Boolean = false
 )
-
-
-//data class GitUserDB(
-//    @ColumnInfo(name="image")
-//    val image:String,
-//    @PrimaryKey
-//    @ColumnInfo(name="id")
-//    val id:String,
-//    @ColumnInfo(name="url")
-//    val url:String,
-//    @ColumnInfo(name="isLike")
-//    val isLike:Boolean
-//)

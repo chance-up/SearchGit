@@ -19,13 +19,13 @@ class DatabaseViewModel @Inject constructor(private val gitUserDBRepo: GitUserDB
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            _gitUsers.postValue(ArrayList(gitUserDBRepo.selectAll()))
+           // _gitUsers.postValue(ArrayList(gitUserDBRepo.selectAll()))
         }
     }
 
     fun update() {
         viewModelScope.launch(Dispatchers.IO) {
-            _gitUsers.postValue(ArrayList(gitUserDBRepo.selectAll()))
+            //_gitUsers.postValue(ArrayList(gitUserDBRepo.selectAll()))
         }
     }
 

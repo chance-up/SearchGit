@@ -1,6 +1,7 @@
 package com.example.searchgit.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +18,7 @@ import com.example.searchgit.databinding.FragmentDatabaseBinding
 import com.example.searchgit.ui.viewmodel.DatabaseViewModel
 import com.example.searchgit.ui.viewmodel.SharedViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -44,9 +46,10 @@ class DatabaseFragment : Fragment() {
 
         sharedViewModel.update.observe(viewLifecycleOwner) {
             if (it) {
-                databaseViewModel.update()
+                databaseViewModel.getList()
             }
         }
+
         return databaseFragmentBinding.root
     }
 
@@ -54,33 +57,68 @@ class DatabaseFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         databaseFragmentBinding.githubUserView.adapter = searchRecyclerViewAdapter.apply {
             onClickLikeBtn = {
-                //Log.e("ccs","$it")
                 lifecycleScope.launch {
-                    databaseViewModel.disLike(it).observe(viewLifecycleOwner) { result ->
-                        when (result) {
-                            ResultStatus.Loading -> {
-                                Toast.makeText(
-                                    requireContext(),
-                                    "Database Delete",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                            is ResultStatus.Error -> {
-                                Toast.makeText(
-                                    requireContext(),
-                                    "실패했어요${result.throwable}",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                            is ResultStatus.Success -> {
-                                if (result.data != 0) {
-                                    sharedViewModel.update.value = true
-                                }
-                            }
-                        }
+                    changeLikeStatus(it)
+                }
+            }
+        }
+    }
+
+
+    private fun changeLikeStatus(position:Int){
+        databaseViewModel.changeStatus(position).observe(viewLifecycleOwner){result ->
+            when (result) {
+                ResultStatus.Loading -> {
+                    Toast.makeText(
+                        requireContext(),
+                        "Database insert",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+                is ResultStatus.Error -> {
+                    Toast.makeText(
+                        requireContext(),
+                        "실패했어요${result.throwable}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+                is ResultStatus.Success -> {
+                    if (result.data != 0) {
+                        sharedViewModel.update.value = true
                     }
                 }
             }
         }
     }
+
+
+//    private fun showList(){
+//        databaseViewModel.getList().observe(viewLifecycleOwner){ result ->
+//            when(result){
+//                is ResultStatus.Loading -> {
+//                    Toast.makeText(
+//                        requireContext(),
+//                        "API Select All",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+//                }
+//                is ResultStatus.Error -> {
+//                    Toast.makeText(
+//                        requireContext(),
+//                        "실패했어요${result.throwable}",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+//                    Log.e("ccs","${result.throwable}")
+//                }
+//                is ResultStatus.Success -> {
+//                    if(result.data !=null){
+//                        Log.e("ccs","${result.data}")
+//                        databaseViewModel.receivedList(ArrayList(result.data))
+//                    }
+//                }
+//            }
+//        }
+//    }
 }

@@ -15,8 +15,7 @@ class GitUserAPIRepository @Inject constructor(private val api : GitUserApi) {
     fun getGitUsers(id:String?) = liveData {
         emit(ResultStatus.Loading)
         try{
-            val response = api.getGitUsers(id)
-            emit(ResultStatus.Success(response))
+            emit(ResultStatus.Success(api.getGitUsers(id)))
         } catch (e: Exception) {
             emit(ResultStatus.Error(e))
         }

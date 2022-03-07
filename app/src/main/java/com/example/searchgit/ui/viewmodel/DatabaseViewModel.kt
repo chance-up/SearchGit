@@ -1,15 +1,14 @@
 package com.example.searchgit.ui.viewmodel
 
-import android.util.Log
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.searchgit.data.GitUser
-import com.example.searchgit.data.ResultStatus
 import com.example.searchgit.repository.GitUserDBRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.lang.Exception
-import java.lang.IllegalArgumentException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -18,17 +17,14 @@ class DatabaseViewModel @Inject constructor(private val gitUserDBRepo: GitUserDB
     val gitUsers : LiveData<ArrayList<GitUser>> = _gitUsers
 
     init {
+        getList()
+    }
+    fun getList() {
         viewModelScope.launch(Dispatchers.IO) {
-           // _gitUsers.postValue(ArrayList(gitUserDBRepo.selectAll()))
+            _gitUsers.postValue(ArrayList(gitUserDBRepo.selectAll()))
         }
     }
 
-    fun update() {
-        viewModelScope.launch(Dispatchers.IO) {
-            //_gitUsers.postValue(ArrayList(gitUserDBRepo.selectAll()))
-        }
-    }
-
-    fun disLike(position:Int) = gitUserDBRepo.deleteOne(_gitUsers.value?.get(position)?.id!!)
+    fun changeStatus(position: Int) = gitUserDBRepo.changeLikeStatus(position,_gitUsers.value)
 }
 

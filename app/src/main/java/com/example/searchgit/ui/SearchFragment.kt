@@ -44,15 +44,8 @@ class SearchFragment : Fragment() {
         }
         searchFragmentBinding.searchButton.setOnClickListener {
             showList()
-            //Log.e("ccs","ccccc")
         }
 
-
-        return searchFragmentBinding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         searchFragmentBinding.githubUserView.adapter = searchRecyclerViewAdapter.apply {
             onClickLikeBtn = {
                 // position으로 get함.
@@ -63,74 +56,16 @@ class SearchFragment : Fragment() {
                     // 'Database Fragment' 에서는
                     // sharedViewmodel의 update변수 값을 관찷(observe)하고 있다가, true로 바뀐다면 List를 새로 뿌려준다.
                     // 이렇게 sharedViewModel을 중간에 하나 둔 이유는, Fragment와 ViewModel이 1:1이면 좋기 때문..
-                    searchViewModel.changeLikeStatus(it).observe(viewLifecycleOwner) { result ->
-                        when (result) {
-                            ResultStatus.Loading -> {
-                                Toast.makeText(
-                                    requireContext(),
-                                    "Database insert",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-
-                            is ResultStatus.Error -> {
-                                Toast.makeText(
-                                    requireContext(),
-                                    "실패했어요${result.throwable}",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-
-                            is ResultStatus.Success -> {
-                                if (result.data != 0) {
-                                    sharedViewModel.update.value = true
-                                }
-                            }
-                        }
-                    }
+                    changeLikeStatus(it)
                 }
             }
         }
 
-//        searchFragmentBinding.searchButton.setOnClickListener {
-//            lifecycleScope.launch{
-//                searchViewModel.showGitUsers()
-////                searchViewModel.showGitUsers().observe(viewLifecycleOwner){ result->
-////                    when (result) {
-////                        ResultStatus.Loading -> {
-////                            Toast.makeText(
-////                                requireContext(),
-////                                "API Search",
-////                                Toast.LENGTH_SHORT
-////                            ).show()
-////                        }
-////
-////                        is ResultStatus.Error -> {
-////                            Toast.makeText(
-////                                requireContext(),
-////                                "실패했어요${result.throwable}",
-////                                Toast.LENGTH_SHORT
-////                            ).show()
-////                        }
-////
-////                        is ResultStatus.Success -> {
-////                            if (result.data != null) {
-////                                searchViewModel.
-////                            }
-////                        }
-////                    }
-////                }
-//            }
-//        }
-
-
-
-
-
+        return searchFragmentBinding.root
     }
 
     private fun showList(){
-        searchViewModel.showGitUser1().observe(viewLifecycleOwner){ result ->
+        searchViewModel.getList().observe(viewLifecycleOwner){ result ->
             when(result){
                 is ResultStatus.Loading -> {
                     Toast.makeText(
@@ -148,12 +83,45 @@ class SearchFragment : Fragment() {
                 }
                 is ResultStatus.Success -> {
                     if(result.data !=null){
+                        Toast.makeText(
+                            requireContext(),
+                            "success",
+                            Toast.LENGTH_SHORT
+                        ).show()
 
+                        //searchViewModel.receivedList()
+                        searchViewModel.filteringList(result.data.items)
                     }
                 }
             }
-            //Log.e("ccs","$it")
+        }
+    }
 
+    private fun changeLikeStatus(position:Int){
+        searchViewModel.changeStatus(position,).observe(viewLifecycleOwner){result ->
+            when (result) {
+                ResultStatus.Loading -> {
+                    Toast.makeText(
+                        requireContext(),
+                        "Database insert",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+                is ResultStatus.Error -> {
+                    Toast.makeText(
+                        requireContext(),
+                        "실패했어요${result.throwable}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+                is ResultStatus.Success -> {
+                    if (result.data != 0) {
+                        sharedViewModel.update.value = true
+                    }
+                }
+            }
         }
     }
 }

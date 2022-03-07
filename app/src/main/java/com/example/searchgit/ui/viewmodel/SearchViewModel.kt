@@ -33,11 +33,37 @@ class SearchViewModel @Inject constructor(
         //val searchText = MutableLiveData<String>("pparkjae")
     }
 
-    //fun showGitUsers(gitUserId:String) = gitUserAPIRepo.getGitUsers(gitUserId)
 
-    fun showGitUser1() = gitUserAPIRepo.getGitUsers(searchText.value)
+    fun getList() = gitUserAPIRepo.getGitUsers(searchText.value)
+    fun changeStatus(position: Int) = gitUserDBRepo.changeLikeStatus(position,_gitUsers.value)
 
-    fun showGitUsers() {
+    fun filteringList(gitUsersList:ArrayList<GitUser>){
+        viewModelScope.launch(Dispatchers.IO) {
+            _gitUsers.postValue(gitUserDBRepo.filterSearchResult(gitUsersList))
+        }
+    }
+
+//    fun changeStatus(position: Int) = liveData {
+//        emit(ResultStatus.Loading)
+//        try {
+//            var gitUserDB = _gitUsers.value?.get(position)
+//
+//            if(!gitUserDB?.isLike!!){
+//                gitUserDB?.isLike = true
+//                emit(ResultStatus.Success(gitUserDBRepo.insert(gitUserDB)))
+//            }else{
+//                gitUserDB?.isLike = false
+//                emit(ResultStatus.Success(gitUserDBRepo.deleteOne(gitUserDB.id)))
+//            }
+//        } catch (e: Exception) {
+//            emit(ResultStatus.Error(e))
+//        }
+//    }
+
+
+
+
+   // fun showGitUsers() {
         //viewModelScope.launch(Dispatchers.IO) {
           ///  val apiGitUsers:MutableSet<String> = mutableSetOf()
 
@@ -59,25 +85,9 @@ class SearchViewModel @Inject constructor(
 
             //_gitUsers.postValue(resultGitUser)
         //}
-    }
+    //}
 
-    fun changeLikeStatus(position: Int) = liveData {
-        emit(ResultStatus.Loading)
-        try {
-            var gitUserDB = _gitUsers.value?.get(position)
 
-            if(!gitUserDB?.isLike!!){
-                gitUserDB?.isLike = true
-                emit(ResultStatus.Success(gitUserDBRepo.insert(gitUserDB)))
-            }else{
-                gitUserDB?.isLike = false
-                emit(ResultStatus.Success(gitUserDBRepo.deleteOne(gitUserDB.id)))
-            }
-
-        } catch (e: Exception) {
-            emit(ResultStatus.Error(e))
-        }
-    }
 }
 
 //class SearchViewModelFactory(
